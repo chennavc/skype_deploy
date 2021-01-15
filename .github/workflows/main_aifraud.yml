@@ -31,4 +31,4 @@ jobs:
       with:
         app-name: 'aifraud'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_018e1c3cdf684c88ac747753de748731 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e53722258b354ca0a1968cbcc9e47747 }}
