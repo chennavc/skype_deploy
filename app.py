@@ -29,6 +29,42 @@ import cv2
 
 app = Flask(__name__)
 
+def rec():
+    fs = 44100  # Sample rate
+    seconds =60# Duration of recording
+    myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=2)
+    
+    sd.wait()  # Wait until recording is finished
+    write('test.wav', fs, myrecording)  # Save as WAV file 
+    return('test.wav')
+
+def mel_spec(path):
+    y, sr = librosa.load(path)
+    librosa.feature.melspectrogram(y=y, sr=sr)
+    D = np.abs(librosa.stft(y))**2
+    S = librosa.feature.melspectrogram(S=D)
+    # Passing through arguments to the Mel filters
+    S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128,
+                                        fmax=8000)
+    plt.figure(figsize=(10,8))
+    librosa.display.specshow(librosa.power_to_db(S,
+                                                 ref=np.max),
+                             fmax=8000,
+                              )
+    plt.savefig("test.png")
+    return("test.png")
+def array (impath):
+    img=cv2.imread(impath)
+    img=cv2.resize(img,(200,200))
+    return img
+def model(arr):
+    reconstructed_model = keras.models.load_model("amodel")
+    result=reconstructed_model.predict_classes(arr.reshape(-1, 200, 200,3),verbose=2)
+    if result == 1:
+        return("genuine")
+    else:
+        return("fraud")
+
 @app.route("/")
 def home():
     return render_template('index.html')
@@ -38,43 +74,7 @@ def result():
     if request.method == 'POST':
         # symbol=request.form['symbol']
 
-        def rec():
-            fs = 44100  # Sample rate
-            seconds =60# Duration of recording
-            myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=2)
-            
-            sd.wait()  # Wait until recording is finished
-            write('test.wav', fs, myrecording)  # Save as WAV file 
-            return('test.wav')
         
-        def mel_spec(path):
-            y, sr = librosa.load(path)
-            librosa.feature.melspectrogram(y=y, sr=sr)
-            D = np.abs(librosa.stft(y))**2
-            S = librosa.feature.melspectrogram(S=D)
-            # Passing through arguments to the Mel filters
-            S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128,
-                                                fmax=8000)
-            plt.figure(figsize=(10,8))
-            librosa.display.specshow(librosa.power_to_db(S,
-                                                         ref=np.max),
-                                     fmax=8000,
-                                      )
-            plt.savefig("test.png")
-            return("test.png")
-
-        def array (impath):
-            img=cv2.imread(impath)
-            img=cv2.resize(img,(200,200))
-            return img
-
-        def model(arr):
-            reconstructed_model = keras.models.load_model("amodel")
-            result=reconstructed_model.predict_classes(arr.reshape(-1, 200, 200,3),verbose=2)
-            if result == 1:
-                return("genuine")
-            else:
-                return("fraud")
         result=model(array (mel_spec(rec())))
         
 
