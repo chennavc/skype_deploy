@@ -1,3 +1,3 @@
 # skype_deploy
 
-![alt text](https://drive.google.com/file/d/12YKaFJfMCPhpTlzwFZW3I2fn_Kd3_IfE/view?usp=sharing)
+![alt text](https://github.com/chennavc/skype_deploy/blob/main/proxy%20_fraud-1%2Cproxy%20_fraud-2%2Cproxy%20_fraud-3/proxy%20_fraud-1.jpg)
