@@ -1,0 +1,6 @@
+# trigger an apt-get update
+update
+
+package "portaudio19-dev"
+package "python-all-dev"
+
