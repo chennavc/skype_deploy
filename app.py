@@ -67,7 +67,7 @@ def model(arr):
 
 @app.route("/")
 def home():
-    return render_template('index.html')
+    return render_template('index_old.html')
 
 @app.route("/result",methods=['GET','POST'])
 def result():
@@ -85,7 +85,15 @@ def result():
 def comingsoon ():
     return render_template('comingsoon.html')
 
+# @app.route('/import',methods=['GET','POST'])
+# def uploadfile():
+#     if request.method == 'PUT':
+#         f = request.files['file']
+#         filePath = "D:\\"+secure_filename(f.filename)
+#         f.save(filePath)
+#         return "success"
+
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
